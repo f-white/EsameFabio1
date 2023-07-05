@@ -8,6 +8,6 @@ namespace EsameFabio1.Commons
 {
 	public class ConstantValues
 	{
-		public const int PasswordMinLenght = 8;
+		public const int PasswordMinLenght = 6;
 	}
 }
