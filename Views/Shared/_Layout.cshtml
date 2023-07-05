@@ -1,0 +1,222 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EsameFabio1.DB.Entities
+@inject UserManager<User> UserManager
+@inject SignInManager<User> SignInManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject EsameFabio1.DB.DBContext userDBContext
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EsameFabio1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    @*Home*@
+                    <li class="nav-item ">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
+                    </li>
+                    <li class="nav-item ">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="HiddenPage">Pagina Nascosta</a>
+                        }
+                    </li>
+                    <li class="nav-item ">
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AdminPage">Pagina Amministratore</a>
+                        }
+
+                        @* @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                        {
+                        <a class="nav-link" asp-area="" asp-controller="Prenotazione" asp-action="Prenotazioni">Le mie prenotazioni</a>
+                        }*@
+
+                    </li>
+
+                </ul>
+
+                @*Create User button*@
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <button type="button" class="btn btn-success  mr-3" data-toggle="modal" data-target="#CreateUserModal">
+                        Registrati
+                    </button>
+                }
+
+                @*Create User modal*@
+                <div class="modal fade" id="CreateUserModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            @*Modal header*@
+                            <div class="modal-header">
+                                <h4 class="modal-title">Registrati</h4>
+                            </div>
+
+                            @*Modal body*@
+                            <div class="modal-body bg-light border border-secondary rounded m-3" id="CreateUserModalBody">
+                                <form id="CreateUserForm">
+                                    <div class="mb-3">
+                                        <label for="UserName" class="form-label">UserName</label>
+                                        <input type="text" class="form-control" id="UserName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="FirstName" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" id="FirstName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="LastName" class="form-label">Cognome</label>
+                                        <input type="text" class="form-control" id="LastName">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="Email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="Password">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="ConfirmPassword" class="form-label">Conferma password</label>
+                                        <input type="password" class="form-control" id="ConfirmPassword">
+                                    </div>
+                                </form>
+                                <div id="CreateUserModalResult">
+                                    @*popolato da JavaScript*@
+                                </div>
+                            </div>
+
+                            @*Modal footer*@
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" onclick="CreateUser()">Registrati</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*Login User button*@
+                @if (!SignInManager.IsSignedIn(User))
+                {
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#LoginUserModal">
+                        Login
+                    </button>
+                }
+
+                @*Login User modal*@
+                <div class="modal fade" id="LoginUserModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            @*Modal header*@
+                            <div class="modal-header">
+                                <h4 class="modal-title">Login</h4>
+                            </div>
+
+                            @*Modal body*@
+                            <div class="modal-body bg-light border border-secondary rounded m-3" id="LoginUserModalBody">
+                                <form id="LoginUserForm">
+                                    <div class="mb-3">
+                                        <label for="LoginUserName" class="form-label">UserName</label>
+                                        <input type="text" class="form-control" id="LoginUserName">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="LoginPassword" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="LoginPassword">
+                                    </div>
+
+                                </form>
+                                <div id="LoginUserModalResult">
+                                    @*popolato da JavaScript*@
+                                </div>
+                            </div>
+
+                            @*Modal footer*@
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" onclick="LoginUser()">Login</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Chiudi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                @*Nome utente loggato a destra, cliccabile per UserPage*@
+                @if (SignInManager.IsSignedIn(User) && !User.IsInRole("Admin"))
+                {
+                    <a class="nav-link text-primary" asp-area="" asp-controller="" asp-action="">@UserManager.GetUserName(User)</a>
+
+                }
+
+                @*Admin loggato a destra, cliccabile per AdminPage*@
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <a class="nav-link text-primary" asp-area="" asp-controller="" asp-action="">@UserManager.GetUserName(User)</a>
+
+                }
+
+
+                @*Logout*@
+                @if (SignInManager.IsSignedIn(User))
+                {
+
+                    <button type="button" class="btn btn-primary" onclick="LogoutUser()">
+                        Logout
+                    </button>
+                }
+
+
+
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - EsameFabio1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/app.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.js"></script>
+
+</body>
+</html>
