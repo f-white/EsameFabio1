@@ -80,7 +80,7 @@ function LoginUser() {
             if (response == "OK") {
                 document.getElementById("LoginUserModalResult").innerHTML = `
                     <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                        <strong>Benvenuto al Villaggio Vacanze!</strong>
+                        <strong>Benvenuto!</strong>
                         <p>Sei stato loggato con successo.</p>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
