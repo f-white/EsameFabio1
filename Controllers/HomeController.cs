@@ -18,13 +18,17 @@ namespace EsameFabio1.Controllers
         private SignInManager<User> signInManager;
         private UserManager<User> userManager;
         private DBContext dbContext;
+        private readonly Repository repository;
         public HomeController(SignInManager<User> signInManager,
             UserManager<User> userManager,
-            DBContext dbContext)
+            DBContext dbContext,
+            Repository repository)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.dbContext = dbContext;
+            this.repository = repository;
+
         }
 
         public IActionResult Index()
@@ -37,9 +41,10 @@ namespace EsameFabio1.Controllers
         }
         public IActionResult Attivita()
         {
+            //qui manca una parte che devo sistemare
+           List<Attivita> attivita = this.repository.GetAttivita();
             List<AttivitaModel> model = new List<AttivitaModel>();
-
-            foreach (Attivita a in resultRow)
+            foreach (Attivita a in attivita)
             {
                 AttivitaModel result = new AttivitaModel()
                 {

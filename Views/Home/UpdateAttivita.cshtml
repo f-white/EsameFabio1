@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Update Attività";
+}
+@using System.Collections.Generic;
+@model List<AttivitaModel>;
+<h1>@ViewData["Title"]</h1>
+<div class="container">
+    @{
+        <table>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].NomeAttivita</td>
+                    <td>@Model[i].DescrizioneAttivita</td>
+                    <td>@Model[i].NomeAttivita</td>
+                    <td>@Model[i].DescrizioneAttivita</td>
+                    <td><button class="btn-sm btn-danger" onclick="updatePersonById('@Model[i].IdAttivita')">Update</button></td>
+                </tr>
+            }
+        </table>
+    }
+</div>
