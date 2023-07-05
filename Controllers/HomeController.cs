@@ -5,8 +5,10 @@ using EsameFabio1.DB;
 using EsameFabio1.DB.Entities;
 using EsameFabio1.Models;
 using System;
+using System.Linq;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace EsameFabio1.Controllers
 {
@@ -33,10 +35,32 @@ namespace EsameFabio1.Controllers
         {
             return View();
         }
+        public IActionResult Attivita()
+        {
+            List<AttivitaModel> model = new List<AttivitaModel>();
 
+            foreach (Attivita a in resultRow)
+            {
+                AttivitaModel result = new AttivitaModel()
+                {
+                    IdAttivita = a.IdAttivita,
+                    NomeAttivita = a.NomeAttivita,
+                    DescrizioneAttivita = a.DescrizioneAttivita,
+                    DataInizio = a.DataInizio,
+                    DataFine = a.DataFine,
+                    NumeroPosti = a.NumeroPosti,
+                    PrezzoAttivita = a.PrezzoAttivita
+
+                };
+
+                model.Add(result);
+            }
+            return View(model);
+        }
         [Authorize]
         public IActionResult HiddenPage()
         {
+
             return View();
         }
 

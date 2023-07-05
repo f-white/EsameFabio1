@@ -1,4 +1,5 @@
 ﻿using EsameFabio1.DB;
+using EsameFabio1.DB.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,21 @@ namespace EsameFabio1.DB
         {
             this.DBContext = DBContext;
         }
-		/* public List<Person> GetPersons()
+
+        public List<Attivita> GetAttivita()
+        {
+            //select * from persons
+            List<Attivita> result = this.DBContext.Attivita.ToList();
+            return result;
+        }
+
+        public List<User> GetUsers()
+        {
+            //select * from persons
+            List<User> result = this.DBContext.Users.ToList();
+            return result;
+        }
+        /* public List<Person> GetPersons()
 		 {
 			 //select * from persons
 			 List<Person> result = this.DBContext.Persons.ToList();
@@ -53,5 +68,5 @@ namespace EsameFabio1.DB
 			 this.DBContext.Persons.Remove(toDelete);
 			 this.DBContext.SaveChanges();    
 		 } */
-	}
+    }
 }
