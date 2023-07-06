@@ -412,8 +412,87 @@ function CancellaCrossAttrazionePeriodo(idCross) {
     });
 };
 
+function insertAtt() {
+    var body = {};
+    body.NomeAttivita = $('#NomeAtt').val();
+    body.DescrizioneAttivita = $('#DescrizioneAtt').val();
+    body.DataInizio = $('#DataInizioAtt').val();
+    body.DataFine = $('#DataFineAtt').val();
+    body.NumeroPosti = $('#PostiAtt').val();
+    body.PrezzoAttivita = $('#PrezzoAtt').val();
+    $.ajax({
+        method: "POST",
+        url: "/api/api/InsertAtt",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(body),
+        dataType: "json",
+        success: function (data, status) {
+            console.log(body);
+            console.log(data);
+            console.log(status);
+            this.always();
+        },
+        error: function (error, status) {
+            console.log(body);
+            console.log(error);
+            console.log(status);
+            this.always();
+        },
+        always: function () { }
+    });
+};
 
+function deleteAtt() {
+    var body = {};
+    body.idAttivita = $('#personID').val();
+    $.ajax({
+        method: "POST",
+        url: "/api/api/DeleteAtt",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(body),
+        dataType: "json",
+        success: function (data, status) {
+            console.log(body);
+            console.log(data);
+            console.log(status);
+            this.always();
+        },
+        error: function (error, status) {
+            console.log(body);
+            console.log(error);
+            console.log(status);
+            this.always();
+        },
+        always: function () { }
+    });
+};
 
+function deleteAttById(id) {
+    var body = {};
+    body.idAttivita = id;
+    $.ajax({
+        method: "POST",
+        url: "/api/api/DeleteAtt",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(body),
+        dataType: "json",
+        success: function (data, status) {
+            console.log(body);
+            console.log(data);
+            console.log(status);
+            this.always();
+        },
+        error: function (error, status) {
+            console.log(body);
+            console.log(error);
+            console.log(status);
+            this.always();
+        },
+        always: function () {
+            window.location = window.location;
+        }
+    });
+};
 
 function refreshPage() {
 

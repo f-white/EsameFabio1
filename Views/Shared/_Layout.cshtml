@@ -42,7 +42,24 @@
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Attivita">Attività</a>
 
                     </li>
-                   
+                    <li class="nav-item ">
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Att" asp-action="InsertAttivita">Ins. Attività</a>
+                        }                     
+                    </li>
+                    <li class="nav-item ">
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Att" asp-action="UpdateAttivita">Mod. Attività</a>
+                        }
+                    </li>
+                    <li class="nav-item ">
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link" asp-area="" asp-controller="Att" asp-action="DeleteAttivita">Canc. Attività</a>
+                        }
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
                     </li>

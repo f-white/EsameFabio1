@@ -28,18 +28,13 @@ namespace EsameFabio1.DB
             List<User> result = this.DBContext.Users.ToList();
             return result;
         }
-        /* public List<Person> GetPersons()
-		 {
-			 //select * from persons
-			 List<Person> result = this.DBContext.Persons.ToList();
-			 return result;
-		 }
-		 public Person GetPersonByID(string id)
+        
+		/* public Person GetPersonByID(string id)
 		 {
 			 //select * from persons where id = "id"
 			 Person result = this.DBContext.Persons.Where(p => p.ID.ToString() == id).FirstOrDefault();
 			 return result;
-		 }
+		 } 
 		 public List<Person> GetPersonWithFilter(string filter)
 		 {
 			 //select * from persons where nome like "%filter%"
@@ -49,24 +44,25 @@ namespace EsameFabio1.DB
 				 || p.Cognome.Contains(filter)).ToList();
 			 return result;
 		 }
-		 public void InsertPerson(Person person)
+		*/
+		 public void InsertAttivita(Attivita attivita)
 		 {
-			 this.DBContext.Persons.Add(person);
+			 this.DBContext.Attivita.Add(attivita);
 			 this.DBContext.SaveChanges();
 		 }
-		 public void UpdatePerson(Person person)
+		 public void UpdateAttivita(Attivita attivita)
 		 {
-			 this.DBContext.Persons.Update(person);
+			 this.DBContext.Attivita.Update(attivita);
 			 this.DBContext.SaveChanges();
 		 }
-		 public void DeletePerson(string ID)
+		 public void DeleteAttivita(string ID)
 		 {
-			 Person toDelete = this.DBContext.Persons
+			 Attivita toDelete = this.DBContext.Attivita
 					 //.Where(p => p.ID != null && p.ID.Value.ToString() == ID) nel caso fosse nullable
-					 .Where(p => p.ID.ToString() == ID)
+					 .Where(a => a.IdAttivita.ToString() == ID)
 					 .FirstOrDefault();
-			 this.DBContext.Persons.Remove(toDelete);
+			 this.DBContext.Attivita.Remove(toDelete);
 			 this.DBContext.SaveChanges();    
-		 } */
+		 } 
     }
 }

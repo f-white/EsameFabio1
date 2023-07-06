@@ -15,9 +15,9 @@ namespace EsameFabio1.Controllers
     
     public class HomeController : Controller
     {
-        private SignInManager<User> signInManager;
-        private UserManager<User> userManager;
-        private DBContext dbContext;
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly DBContext dbContext;
         private readonly Repository repository;
         public HomeController(SignInManager<User> signInManager,
             UserManager<User> userManager,
@@ -41,7 +41,7 @@ namespace EsameFabio1.Controllers
         }
         public IActionResult Attivita()
         {
-            //qui manca una parte che devo sistemare
+            //qui manca una parte che devo sistemare per listare solo le attività che sono prenotabili
            List<Attivita> attivita = this.repository.GetAttivita();
             List<AttivitaModel> model = new List<AttivitaModel>();
             foreach (Attivita a in attivita)
@@ -79,7 +79,8 @@ namespace EsameFabio1.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
+       
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel loginModel)
         {

@@ -132,149 +132,166 @@ namespace TestFinaleFabio.Controllers
             return Json("OK");
         }
 
+        [HttpPost("InsertAtt")]
+        public async Task<IActionResult> InsertAtt([FromBody] AttivitaModel model)
+        {
+            Attivita a = new Attivita();
+            a.NomeAttivita = model.NomeAttivita;
+            a.DescrizioneAttivita = model.DescrizioneAttivita;
+            a.DataInizio = model.DataInizio;
+            a.DataFine = model.DataFine;
+            a.NumeroPosti = model.NumeroPosti;
+            a.PrezzoAttivita = model.PrezzoAttivita;
+            this.repository.InsertAttivita(a);
+            return Ok(200);
+        }
+
+
+
+
 
         // Prenota User
-      /*  [Authorize]
-        [HttpPost("PrenotaUser")]
-        public async Task<IActionResult> PrenotaUser([FromBody] CrossAttrazionePeriodoModel crossModel)
-        {
-            try
-            {
-                ClaimsPrincipal currentUser = this.User;
+        /*  [Authorize]
+          [HttpPost("PrenotaUser")]
+          public async Task<IActionResult> PrenotaUser([FromBody] CrossAttrazionePeriodoModel crossModel)
+          {
+              try
+              {
+                  ClaimsPrincipal currentUser = this.User;
 
-                string userId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value; //per avere l'id della persona loggata
-
-
-                var result =  AttrazioneService.PrenotaUser(crossModel, userId);
-
-                if (result == "OK")
-                {
-                    return Json("OK");
-                }
-                else
-                {
-
-                    return Json("KO");
-                }
-
-                
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-
-            return Json("Richiesta non valida.");
-        }
-
-        // Modifica Posti Prenotati
-        [Authorize]
-        [HttpPost("ModificaPosti")]
-        public async Task<IActionResult> ModificaPosti([FromBody] PrenotazioneModel prenotazioneModel)
-        {
-            try
-            {
-                
+                  string userId = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value; //per avere l'id della persona loggata
 
 
-                var result = AttrazioneService.ModificaPosti(prenotazioneModel);
+                  var result =  AttrazioneService.PrenotaUser(crossModel, userId);
 
-                if (result == "OK")
-                {
-                    return Json("OK");
-                }
-                else
-                {
+                  if (result == "OK")
+                  {
+                      return Json("OK");
+                  }
+                  else
+                  {
 
-                    return Json("KO");
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-
-            return Json("Richiesta non valida.");
-        }
+                      return Json("KO");
+                  }
 
 
-        [Authorize]
-        [HttpPost("CancellaPrenotazione")]
-        public async Task<IActionResult> CancellaPrenotazione([FromBody] PrenotazioneModel prenotazioneModel)
-        {
-            try
-            {
+              }
+              catch (Exception ex)
+              {
+                  logger.LogError(ex, ex.Message);
+              }
+
+              return Json("Richiesta non valida.");
+          }
+
+          // Modifica Posti Prenotati
+          [Authorize]
+          [HttpPost("ModificaPosti")]
+          public async Task<IActionResult> ModificaPosti([FromBody] PrenotazioneModel prenotazioneModel)
+          {
+              try
+              {
 
 
 
-                var result = AttrazioneService.CancellaPrenotazione(prenotazioneModel);
+                  var result = AttrazioneService.ModificaPosti(prenotazioneModel);
 
-                if (result == "OK")
-                {
-                    return Json("OK");
-                }
-                else
-                {
+                  if (result == "OK")
+                  {
+                      return Json("OK");
+                  }
+                  else
+                  {
 
-                    return Json("KO");
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-
-            return Json("Richiesta non valida.");
-        }
+                      return Json("KO");
+                  }
 
 
+              }
+              catch (Exception ex)
+              {
+                  logger.LogError(ex, ex.Message);
+              }
 
-        [Authorize]
-        [HttpPost("CancellaCrossAttrazionePeriodo")]
-        public async Task<IActionResult> CancellaCrossAttrazionePeriodo([FromBody] CrossAttrazionePeriodoModel crossModel)
-        {
-            try
-            {
-
-
-
-                var result = AttrazioneService.CancellaCrossAttrazionePeriodo(crossModel);
-
-                if (result == "OK")
-                {
-                    return Json("OK");
-                }
-                else
-                {
-
-                    return Json("KO");
-                }
+              return Json("Richiesta non valida.");
+          }
 
 
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-            }
-
-            return Json("Richiesta non valida.");
-        }
+          [Authorize]
+          [HttpPost("CancellaPrenotazione")]
+          public async Task<IActionResult> CancellaPrenotazione([FromBody] PrenotazioneModel prenotazioneModel)
+          {
+              try
+              {
 
 
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+                  var result = AttrazioneService.CancellaPrenotazione(prenotazioneModel);
 
-        */
+                  if (result == "OK")
+                  {
+                      return Json("OK");
+                  }
+                  else
+                  {
 
-        
+                      return Json("KO");
+                  }
+
+
+              }
+              catch (Exception ex)
+              {
+                  logger.LogError(ex, ex.Message);
+              }
+
+              return Json("Richiesta non valida.");
+          }
+
+
+
+          [Authorize]
+          [HttpPost("CancellaCrossAttrazionePeriodo")]
+          public async Task<IActionResult> CancellaCrossAttrazionePeriodo([FromBody] CrossAttrazionePeriodoModel crossModel)
+          {
+              try
+              {
+
+
+
+                  var result = AttrazioneService.CancellaCrossAttrazionePeriodo(crossModel);
+
+                  if (result == "OK")
+                  {
+                      return Json("OK");
+                  }
+                  else
+                  {
+
+                      return Json("KO");
+                  }
+
+
+              }
+              catch (Exception ex)
+              {
+                  logger.LogError(ex, ex.Message);
+              }
+
+              return Json("Richiesta non valida.");
+          }
+
+
+
+          [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+          public IActionResult Error()
+          {
+              return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+          }
+
+          */
+
+
 
 
     }
