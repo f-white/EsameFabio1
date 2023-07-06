@@ -418,11 +418,11 @@ function insertAtt() {
     body.DescrizioneAttivita = $('#DescrizioneAtt').val();
     body.DataInizio = $('#DataInizioAtt').val();
     body.DataFine = $('#DataFineAtt').val();
-    body.NumeroPosti = $('#PostiAtt').val();
-    body.PrezzoAttivita = $('#PrezzoAtt').val();
+    body.NumeroPosti = parseInt($('#PostiAtt').val()); //importante parsificare il testo!!!
+    body.PrezzoAttivita = parseFloat($('#PrezzoAtt').val()); //importante parsificare il testo!!!
     $.ajax({
         method: "POST",
-        url: "/api/api/InsertAtt",
+        url: "/api/Api/InsertAtt",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(body),
         dataType: "json",
@@ -493,18 +493,18 @@ function deleteAttById(id) {
         }
     });
 };
-function updatePersonById(id) {
+function updateAttById(id) {
     nameP = document.createElement("p");
     nameP.style.textAlign = "center";
     nameP.innerText = 'Nome';
-    document.getElementById("modal-body").appendChild(nameP);
+    document.getElementById("modal-upd").appendChild(nameP);
     nameTextArea = document.createElement("input");
     nameP.appendChild(nameTextArea);
 
     lastNameP = document.createElement("p");
     lastNameP.style.textAlign = "center";
     lastNameP.innerText = 'Cognome';
-    document.getElementById("modal-body").appendChild(lastNameP);
+    document.getElementById("modal-upd").appendChild(lastNameP);
     lastNameTextArea = document.createElement("input");
     lastNameP.appendChild(lastNameTextArea);
 
@@ -515,7 +515,7 @@ function updatePersonById(id) {
     OKbutton.classList.add("btn-success");
     OKbutton.onclick = function () {
         var body = {};
-        body.ID = id;
+        body.idAttivita = id;
         body.Nome = nameTextArea.value;
         body.Cognome = lastNameTextArea.value;
         $.ajax({

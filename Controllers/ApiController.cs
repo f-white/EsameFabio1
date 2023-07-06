@@ -152,14 +152,14 @@ namespace TestFinaleFabio.Controllers
         public async Task<IActionResult> UpdateAtt([FromBody] AttivitaModel model)
         {
             Attivita a = new Attivita();
-            a.IdAttivita = System.Guid.NewGuid(model.IdAttivita);
+            a.IdAttivita = model.IdAttivita;
             a.NomeAttivita = model.NomeAttivita;
             a.DescrizioneAttivita = model.DescrizioneAttivita;
             a.DataInizio = model.DataInizio;
             a.DataFine = model.DataFine;
             a.NumeroPosti = model.NumeroPosti;
             a.PrezzoAttivita = model.PrezzoAttivita;
-            this.repository.InsertAttivita(a);
+            this.repository.UpdateAttivita(a);
             return Ok(200);
         }
 
