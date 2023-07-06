@@ -55,11 +55,11 @@ namespace EsameFabio1.DB
 			 this.DBContext.Attivita.Update(attivita);
 			 this.DBContext.SaveChanges();
 		 }
-		 public void DeleteAttivita(string ID)
+		 public void DeleteAttivita(Guid ID)
 		 {
 			 Attivita toDelete = this.DBContext.Attivita
 					 //.Where(p => p.ID != null && p.ID.Value.ToString() == ID) nel caso fosse nullable
-					 .Where(a => a.IdAttivita.ToString() == ID)
+					 .Where(a => a.IdAttivita == ID)
 					 .FirstOrDefault();
 			 this.DBContext.Attivita.Remove(toDelete);
 			 this.DBContext.SaveChanges();    

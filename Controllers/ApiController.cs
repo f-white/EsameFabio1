@@ -131,11 +131,13 @@ namespace TestFinaleFabio.Controllers
             }
             return Json("OK");
         }
-
+        // Inserisci Attività
         [HttpPost("InsertAtt")]
         public async Task<IActionResult> InsertAtt([FromBody] AttivitaModel model)
         {
             Attivita a = new Attivita();
+            //chiedere se serve
+            a.IdAttivita = System.Guid.NewGuid();
             a.NomeAttivita = model.NomeAttivita;
             a.DescrizioneAttivita = model.DescrizioneAttivita;
             a.DataInizio = model.DataInizio;
@@ -146,6 +148,28 @@ namespace TestFinaleFabio.Controllers
             return Ok(200);
         }
 
+        [HttpPost("UpdateAtt")]
+        public async Task<IActionResult> UpdateAtt([FromBody] AttivitaModel model)
+        {
+            Attivita a = new Attivita();
+            a.IdAttivita = System.Guid.NewGuid(model.IdAttivita);
+            a.NomeAttivita = model.NomeAttivita;
+            a.DescrizioneAttivita = model.DescrizioneAttivita;
+            a.DataInizio = model.DataInizio;
+            a.DataFine = model.DataFine;
+            a.NumeroPosti = model.NumeroPosti;
+            a.PrezzoAttivita = model.PrezzoAttivita;
+            this.repository.InsertAttivita(a);
+            return Ok(200);
+        }
+
+        // Cancella Attività
+        [HttpPost("DeleteAtt")]
+        public async Task<IActionResult> DeleteAtt([FromBody] AttivitaModel model)
+        {
+            this.repository.DeleteAttivita(model.IdAttivita);
+            return Ok(200);
+        }
 
 
 
