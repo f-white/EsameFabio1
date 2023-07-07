@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Elenco delle attività prenotate";
+
+}
+@using Microsoft.AspNetCore.Identity;
+@using EsameFabio1.DB.Entities;
+@inject UserManager<User> UserManager
+@model List<PrenotazioneModel>
+
+
+<div class="container">
+    <div class="text-center">
+        <h1 class="my-5">@ViewData["Title"]</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>Id Attivita</th>*@
+                <th>Nome Attivita</th>
+                <th>Descrizione Attivita</th>
+                <th>Data Inizio</th>
+                <th>Data Fine</th>
+                @*<th>Numero Posti</th>*@
+                @*<th>Prezzo Attivita</th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var roba in Model)
+            {
+                <tr>
+                    @*<td>@attivita.IdAttivita</td>*@
+                    <td>@roba.Attivita.NomeAttivita</td>
+                    <td>@roba.Attivita.DescrizioneAttivita</td>
+                    <td>@roba.Attivita.DataInizio</td>
+                    <td>@roba.Attivita.DataFine</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="deleteAttivita('@roba.IdPrenotazioneAttivita')">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -148,269 +148,296 @@ function LogoutUser() {
     });
 };
 
-
-function PrenotaUser(idCrossAttrazionePeriodo, indice) {
+function prenotaAttivita(userId, idAttivita) {
+    var body = {};
+    body.IdUtente = userId;
+    body.IdAttivita = idAttivita;
+    console.log(body);
+    $.ajax({
+        url: "/api/Api/PrenotaAttivita",
+        method: "POST",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({
+            IdUtente: userId,
+            IdAttivita: idAttivita
+        }),
+        dataType: "json",
+        success: function (response) {
+            // Gestisci la risposta qui se necessario
+            console.log(response);
+            alert("Prenotazione effettuata");
+            window.location.href = "/Home/Attivita";
+        },
+        error: function (error) {
+            // Gestisci l'errore qui se necessario
+            console.log(error);
+            alert("Prenotazione effettuata");
+            window.location.href = "/Home/Attivita";
+        }
+    });
+}
+//function PrenotaUser(idCrossAttrazionePeriodo, indice) {
    
-    var body = {};
-    body.numPosti = document.getElementById("#" + indice + "numeroPostiScelti").value;
-    body.Id = idCrossAttrazionePeriodo;
-    console.log(body);
-    $.ajax({
-        method: "POST",
-        url: "/api/Api/PrenotaUser",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(body),
-        dataType: "json",
-        success: function (response, status) {
-            textP = document.createElement("p");
-            textP.style.textAlign = "center";
-            textP.innerText = response;
-            if (response == "OK") {
-                document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-success">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Buon viaggio!</strong>
-                        <p>La tua prenotazione è avvenuta con successo.</p>
-                    </div>`;
+//    var body = {};
+//    body.numPosti = document.getElementById("#" + indice + "numeroPostiScelti").value;
+//    body.Id = idCrossAttrazionePeriodo;
+//    console.log(body);
+//    $.ajax({
+//        method: "POST",
+//        url: "/api/Api/PrenotaUser",
+//        contentType: "application/json; charset=utf-8",
+//        data: JSON.stringify(body),
+//        dataType: "json",
+//        success: function (response, status) {
+//            textP = document.createElement("p");
+//            textP.style.textAlign = "center";
+//            textP.innerText = response;
+//            if (response == "OK") {
+//                document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-success">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Buon viaggio!</strong>
+//                        <p>La tua prenotazione è avvenuta con successo.</p>
+//                    </div>`;
                
 
-                setTimeout(() => {
-                    window.location.replace('/Prenotazione/Prenotazioni');
-                },1000)
-                //window.setTimeout( window.location.replace('/Prenotazione/Prenotazioni') , 5000);
+//                setTimeout(() => {
+//                    window.location.replace('/Prenotazione/Prenotazioni');
+//                },1000)
+//                //window.setTimeout( window.location.replace('/Prenotazione/Prenotazioni') , 5000);
                
-            }
-            else {
-                document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-danger">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Prenotazione fallita!</strong>
-                        <p>Non ci sono abbastanza posti disponibili oppure hai scelto 0 posti!</p>
-                    </div>`;
-            }
+//            }
+//            else {
+//                document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-danger">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Prenotazione fallita!</strong>
+//                        <p>Non ci sono abbastanza posti disponibili oppure hai scelto 0 posti!</p>
+//                    </div>`;
+//            }
 
 
-            this.always();
-        },
-        error: function (error, status) {
-            console.log("sono in error del js", error);
-            document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Prenotazione fallita :(</strong>
-                        <p>Errore nella prenotazione</p>
+//            this.always();
+//        },
+//        error: function (error, status) {
+//            console.log("sono in error del js", error);
+//            document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+//                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Prenotazione fallita :(</strong>
+//                        <p>Errore nella prenotazione</p>
                         
-                    </div>`;
-            this.always();
-        },
-        always: function () {
+//                    </div>`;
+//            this.always();
+//        },
+//        always: function () {
 
 
            
-        }
-    });
-};
+//        }
+//    });
+//};
 
 
 
-function ModificaPosti(idPrenotazione, indice) {
+//function ModificaPosti(idPrenotazione, indice) {
 
-    var body = {};
-    body.NumPostiPrenotati = document.getElementById("#" + indice + "numeroPostiModificati").value;
-    body.Id = idPrenotazione;
-    console.log(body);
-    $.ajax({
-        method: "POST",
-        url: "/api/Api/ModificaPosti",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(body),
-        dataType: "json",
-        success: function (response, status) {
-            textP = document.createElement("p");
-            textP.style.textAlign = "center";
-            textP.innerText = response;
-            if (response == "OK") {
-                document.getElementById("ModificaPostiResult").innerHTML = `
-                    <div class="alert alert-success">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Buon viaggio!</strong>
-                        <p>La tua modifica è avvenuta con successo.</p>
-                    </div>`;
-
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000)
-                //window.setTimeout( window.location.replace('/Prenotazione/Prenotazioni') , 5000);
-
-            }
-            else {
-                document.getElementById("ModificaPostiResult").innerHTML = `
-                    <div class="alert alert-danger">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Modifica fallita!</strong>
-                        <p>Non ci sono abbastanza posti disponibili oppure hai scelto 0 posti!</p>
-                    </div>`;
-            }
+//    var body = {};
+//    body.NumPostiPrenotati = document.getElementById("#" + indice + "numeroPostiModificati").value;
+//    body.Id = idPrenotazione;
+//    console.log(body);
+//    $.ajax({
+//        method: "POST",
+//        url: "/api/Api/ModificaPosti",
+//        contentType: "application/json; charset=utf-8",
+//        data: JSON.stringify(body),
+//        dataType: "json",
+//        success: function (response, status) {
+//            textP = document.createElement("p");
+//            textP.style.textAlign = "center";
+//            textP.innerText = response;
+//            if (response == "OK") {
+//                document.getElementById("ModificaPostiResult").innerHTML = `
+//                    <div class="alert alert-success">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Buon viaggio!</strong>
+//                        <p>La tua modifica è avvenuta con successo.</p>
+//                    </div>`;
 
 
-            this.always();
-        },
-        error: function (error, status) {
-            console.log("sono in error del js", error);
-            document.getElementById("ModificaUserResult").innerHTML = `
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Modifica fallita :(</strong>
-                        <p>Errore nella modifica</p>
+//                setTimeout(() => {
+//                    window.location.reload();
+//                }, 1000)
+//                //window.setTimeout( window.location.replace('/Prenotazione/Prenotazioni') , 5000);
+
+//            }
+//            else {
+//                document.getElementById("ModificaPostiResult").innerHTML = `
+//                    <div class="alert alert-danger">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Modifica fallita!</strong>
+//                        <p>Non ci sono abbastanza posti disponibili oppure hai scelto 0 posti!</p>
+//                    </div>`;
+//            }
+
+
+//            this.always();
+//        },
+//        error: function (error, status) {
+//            console.log("sono in error del js", error);
+//            document.getElementById("ModificaUserResult").innerHTML = `
+//                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Modifica fallita :(</strong>
+//                        <p>Errore nella modifica</p>
                        
-                    </div>`;
-            this.always();
-        },
-        always: function () {
+//                    </div>`;
+//            this.always();
+//        },
+//        always: function () {
 
 
 
-        }
-    });
-};
+//        }
+//    });
+//};
 
-function CancellaPrenotazione(idPrenotazione) {
+//function CancellaPrenotazione(idPrenotazione) {
 
-    var body = {};
-    body.Id = idPrenotazione;
-    console.log(body);
-    $.ajax({
-        method: "POST",
-        url: "/api/Api/CancellaPrenotazione",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(body),
-        dataType: "json",
-        success: function (response, status) {
-            textP = document.createElement("p");
-            textP.style.textAlign = "center";
-            textP.innerText = response;
-            if (response == "OK") {
-                document.getElementById("ModificaPostiResult").innerHTML = `
-                    <div class="alert alert-success">
-                        <strong>Eliminazione avvenuta con successo!</strong>
-                    </div>`;
-
-
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000)
-
-            }
-            else {
-                document.getElementById("ModificaPostiResult").innerHTML = `
-                    <div class="alert alert-danger">
-                        <strong>Cancellazione fallita!</strong>
-                        <p>Qualcosa è andato storto</p>
-                    </div>`;
-            }
+//    var body = {};
+//    body.Id = idPrenotazione;
+//    console.log(body);
+//    $.ajax({
+//        method: "POST",
+//        url: "/api/Api/CancellaPrenotazione",
+//        contentType: "application/json; charset=utf-8",
+//        data: JSON.stringify(body),
+//        dataType: "json",
+//        success: function (response, status) {
+//            textP = document.createElement("p");
+//            textP.style.textAlign = "center";
+//            textP.innerText = response;
+//            if (response == "OK") {
+//                document.getElementById("ModificaPostiResult").innerHTML = `
+//                    <div class="alert alert-success">
+//                        <strong>Eliminazione avvenuta con successo!</strong>
+//                    </div>`;
 
 
-            this.always();
-        },
-        error: function (error, status) {
-            console.log("sono in error del js", error);
-            document.getElementById("ModificaUserResult").innerHTML = `
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <strong>Cancellazione fallita :(</strong>
-                        <p>Qualcosa è andato storto</p>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>`;
-            this.always();
-        },
-        always: function () {
+//                setTimeout(() => {
+//                    window.location.reload();
+//                }, 1000)
+
+//            }
+//            else {
+//                document.getElementById("ModificaPostiResult").innerHTML = `
+//                    <div class="alert alert-danger">
+//                        <strong>Cancellazione fallita!</strong>
+//                        <p>Qualcosa è andato storto</p>
+//                    </div>`;
+//            }
+
+
+//            this.always();
+//        },
+//        error: function (error, status) {
+//            console.log("sono in error del js", error);
+//            document.getElementById("ModificaUserResult").innerHTML = `
+//                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+//                        <strong>Cancellazione fallita :(</strong>
+//                        <p>Qualcosa è andato storto</p>
+//                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                    </div>`;
+//            this.always();
+//        },
+//        always: function () {
 
 
 
-        }
-    });
-};
+//        }
+//    });
+//};
 
-function CancellaCrossAttrazionePeriodo(idCross) {
+//function CancellaCrossAttrazionePeriodo(idCross) {
 
-    var body = {};
-    body.Id = idCross;
-    console.log(body);
-    $.ajax({
-        method: "POST",
-        url: "/api/Api/CancellaCrossAttrazionePeriodo",
-        contentType: "application/json; charset=utf-8",
-        data: JSON.stringify(body),
-        dataType: "json",
-        success: function (response, status) {
-            textP = document.createElement("p");
-            textP.style.textAlign = "center";
-            textP.innerText = response;
-            if (response == "OK") {
-                document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-success">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Eliminazione avvenuta con successo!</strong>
-                    </div>`;
+//    var body = {};
+//    body.Id = idCross;
+//    console.log(body);
+//    $.ajax({
+//        method: "POST",
+//        url: "/api/Api/CancellaCrossAttrazionePeriodo",
+//        contentType: "application/json; charset=utf-8",
+//        data: JSON.stringify(body),
+//        dataType: "json",
+//        success: function (response, status) {
+//            textP = document.createElement("p");
+//            textP.style.textAlign = "center";
+//            textP.innerText = response;
+//            if (response == "OK") {
+//                document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-success">
+//                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Eliminazione avvenuta con successo!</strong>
+//                    </div>`;
 
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000)
+//                setTimeout(() => {
+//                    window.location.reload();
+//                }, 2000)
 
-            }
-            else {
-                document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-danger">
-                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Cancellazione fallita!</strong>
-                        <p>Non è possibile eliminare un periodo se ci sono delle prenotazioni effettuate</p>
+//            }
+//            else {
+//                document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-danger">
+//                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Cancellazione fallita!</strong>
+//                        <p>Non è possibile eliminare un periodo se ci sono delle prenotazioni effettuate</p>
                        
-                    </div>`;
-            }
+//                    </div>`;
+//            }
 
 
-            this.always();
-        },
-        error: function (error, status) {
-            console.log("sono in error del js", error);
-            document.getElementById("PrenotaUserResult").innerHTML = `
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <strong>Cancellazione fallita:(</strong>
-                        <p>Qualcosa è andato storto</p>
+//            this.always();
+//        },
+//        error: function (error, status) {
+//            console.log("sono in error del js", error);
+//            document.getElementById("PrenotaUserResult").innerHTML = `
+//                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+//                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+//                            <span aria-hidden="true">&times;</span>
+//                        </button>
+//                        <strong>Cancellazione fallita:(</strong>
+//                        <p>Qualcosa è andato storto</p>
                        
-                    </div>`;
-            this.always();
-        },
-        always: function () {
+//                    </div>`;
+//            this.always();
+//        },
+//        always: function () {
 
            
 
 
-        }
-    });
-};
+//        }
+//    });
+//};
 
 function insertAtt() {
     var body = {};
@@ -420,6 +447,7 @@ function insertAtt() {
     body.DataFine = $('#DataFineAtt').val();
     body.NumeroPosti = parseInt($('#PostiAtt').val()); //importante parsificare il testo!!!
     body.PrezzoAttivita = parseFloat($('#PrezzoAtt').val()); //importante parsificare il testo!!!
+    body.ImgAtt = $('#ImgAtt').val();
     $.ajax({
         method: "POST",
         url: "/api/Api/InsertAtt",
@@ -538,8 +566,14 @@ function updateAttById(id) {
     PrezzoP.innerText = 'Prezzo';
     document.getElementById("modal-body-upd").appendChild(PrezzoP);
     PrezzoTextArea = document.createElement("input");
-    PrezzoTextArea.setAttribute("type", "number");
     PrezzoP.appendChild(PrezzoTextArea);
+
+    ImgAttP = document.createElement("p");
+    ImgAttP.style.textAlign = "left";
+    ImgAttP.innerText = 'Link immagine';
+    document.getElementById("modal-body-upd").appendChild(ImgAttP);
+    ImgTextArea = document.createElement("input");
+    ImgAttP.appendChild(ImgTextArea);
 
     OKbutton = document.createElement("button");
     OKbutton.innerText = "OK";
@@ -553,6 +587,9 @@ function updateAttById(id) {
         body.DescrizioneAttivita = DescrTextArea.value;
         body.DataInizio = DataInizioTextArea.value;
         body.DataFine = DataFineTextArea.value;
+        body.numeroPosti = parseInt(PostiTextArea.value);
+        body.PrezzoAttivita = parseFloat(PrezzoTextArea.value);
+        body.ImgAtt = ImgAttP.value;
         $.ajax({
             method: "POST",
             url: "/api/api/UpdateAtt",

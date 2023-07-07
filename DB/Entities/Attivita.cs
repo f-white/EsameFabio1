@@ -13,6 +13,7 @@ namespace EsameFabio1.DB.Entities
         public DateTime DataFine { get; set; }
         public int NumeroPosti { get; set; }
         public decimal PrezzoAttivita { get;set; }
+        public string ImgAtt { get; set; }
 
     }
 }

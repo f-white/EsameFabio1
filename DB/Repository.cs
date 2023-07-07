@@ -2,6 +2,7 @@
 using EsameFabio1.DB.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -50,10 +51,15 @@ namespace EsameFabio1.DB
 			 this.DBContext.Attivita.Add(attivita);
 			 this.DBContext.SaveChanges();
 		 }
-		 public void UpdateAttivita(Attivita attivita)
-		 {
-			 this.DBContext.Attivita.Update(attivita);
-			 this.DBContext.SaveChanges();
+		 public void UpdateAttivita(Attivita attivitaupd)
+        {
+
+            this.DBContext.Attivita.Update(attivitaupd);
+            this.DBContext.SaveChanges();
+    //        Attivita toUpdate = this.DBContext.Attivita
+    //        .Where(a => a.IdAttivita == attivitaupd.IdAttivita).FirstOrDefault();
+    //        this.DBContext.Attivita.Update(attivitaupd);
+			 //this.DBContext.SaveChanges();
 		 }
 		 public void DeleteAttivita(Guid ID)
 		 {
@@ -63,6 +69,23 @@ namespace EsameFabio1.DB
 					 .FirstOrDefault();
 			 this.DBContext.Attivita.Remove(toDelete);
 			 this.DBContext.SaveChanges();    
-		 } 
+		 }
+
+        public void AddPrenotazione(string userId, Guid attivitaId)
+        {
+           // Attivita entity = this.DBContext.Attivita.Where
+            Prenotazione prenotazione = new Prenotazione
+            {
+                IdPrenotazioneAttivita = Guid.NewGuid(), // Genera un nuovo ID per la prenotazione
+                IdUtente = userId,
+                IdAttivita = attivitaId
+
+
+            };
+
+            this.DBContext.Prenotazioni.Add(prenotazione);
+            this.DBContext.SaveChanges();
+
+        }
     }
 }

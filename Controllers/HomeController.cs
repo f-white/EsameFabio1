@@ -54,7 +54,8 @@ namespace EsameFabio1.Controllers
                     DataInizio = a.DataInizio,
                     DataFine = a.DataFine,
                     NumeroPosti = a.NumeroPosti,
-                    PrezzoAttivita = a.PrezzoAttivita
+                    PrezzoAttivita = a.PrezzoAttivita,
+                    ImgAtt = a.ImgAtt
 
                 };
 

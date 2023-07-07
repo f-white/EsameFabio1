@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Attivita";
+    ViewData["Title"] = "Attività";
 
 }
 @using Microsoft.AspNetCore.Identity;
@@ -20,15 +20,20 @@
         @foreach (AttivitaModel a in Model)
         {
             <div class="col-md-4">
-                <div class="card">
-                    <img src="/IMG/@(a.NomeAttivita).jpg" class="card-img-top" alt="@(a.DescrizioneAttivita)">
+                <div class="card border">
+                    <img src="@(a.ImgAtt)" class="card-img-top" alt="@(a.DescrizioneAttivita)">
                     <div class="card-body">
                         <h5 class="card-title">@a.NomeAttivita</h5>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#collapse-@(a.IdAttivita)">Descrizione estesa</button>
+
+                        <div id="collapse-@(a.IdAttivita)" class="collapse">
                         <p class="card-text">Descrizione: @a.DescrizioneAttivita</p>
-                        <p class="card-text">Data Inizio: @a.DataInizio</p>
-                        <p class="card-text">Data Fine: @a.DataFine</p>
-                        <p class="card-text">Numero Posti: @a.NumeroPosti</p>
-                        <p class="card-text">Prezzo: @a.PrezzoAttivita</p>
+                        </div>
+                        <hr>
+                        <p class="card-text"><strong>Data Inizio:</strong> @a.DataInizio</p>
+                        <p class="card-text"><strong>Data Fine:</strong> @a.DataFine</p>
+                        <p class="card-text"><strong>Numero Posti:</strong> @a.NumeroPosti</p>
+                        <p class="card-text"><strong>Prezzo:</strong> @a.PrezzoAttivita</p>
                         @if (User.IsInRole("Admin"))
                         {
                         }

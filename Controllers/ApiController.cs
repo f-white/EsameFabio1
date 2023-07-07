@@ -144,6 +144,7 @@ namespace TestFinaleFabio.Controllers
             a.DataFine = model.DataFine;
             a.NumeroPosti = model.NumeroPosti;
             a.PrezzoAttivita = model.PrezzoAttivita;
+            a.ImgAtt = model.ImgAtt;
             this.repository.InsertAttivita(a);
             return Ok(200);
         }
@@ -159,6 +160,7 @@ namespace TestFinaleFabio.Controllers
             a.DataFine = model.DataFine;
             a.NumeroPosti = model.NumeroPosti;
             a.PrezzoAttivita = model.PrezzoAttivita;
+            a.ImgAtt = model.ImgAtt;
             this.repository.UpdateAttivita(a);
             return Ok(200);
         }
@@ -171,7 +173,14 @@ namespace TestFinaleFabio.Controllers
             return Ok(200);
         }
 
+        [HttpPost("PrenotaAttivita")]
+        public async Task<IActionResult> PrenotaAttivita([FromBody] Prenotazione prenotazione)
+        {
+            string userId = userManager.GetUserId(User);
 
+            repository.AddPrenotazione(userId, prenotazione.IdAttivita);
+            return Ok();
+        }
 
 
         // Prenota User

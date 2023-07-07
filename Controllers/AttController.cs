@@ -106,6 +106,7 @@ namespace EsameFabio1.Controllers
                     DataFine = a.DataFine,
                     NumeroPosti = a.NumeroPosti,
                     PrezzoAttivita = a.PrezzoAttivita
+
                 });
             return View(model);
         }

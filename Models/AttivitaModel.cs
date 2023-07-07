@@ -12,6 +12,7 @@ namespace EsameFabio1.Models
         public DateTime DataFine { get; set; }
         public int NumeroPosti { get; set; }
         public decimal PrezzoAttivita { get; set; }
+        public string ImgAtt { get; set; }
 
     }
 }

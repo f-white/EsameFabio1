@@ -11,8 +11,12 @@ namespace EsameFabio1.DB.Entities
         public string IdUtente { get; set; }
         public Guid IdAttivita { get; set; }
 
-        [ForeignKey(nameof(IdUtente))]
-        public User IdUserNavigation { get; set; }
+        //[ForeignKey(nameof(IdUtente))]
+        //public User IdUserNavigation { get; set; }
+      
+        [ForeignKey(nameof(IdAttivita))]
+        public Attivita Attivita { get; set; }
+
 
     }
 }
