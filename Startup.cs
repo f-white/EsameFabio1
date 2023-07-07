@@ -28,7 +28,7 @@ namespace EsameFabio1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SchoolConnection")));
+            services.AddDbContext<DBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //User Management
             services.AddIdentity<User, IdentityRole>()

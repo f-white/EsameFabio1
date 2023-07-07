@@ -494,19 +494,52 @@ function deleteAttById(id) {
     });
 };
 function updateAttById(id) {
+    document.getElementById("modal-header-upd").innerText = "Aggiorna Valori"
     nameP = document.createElement("p");
-    nameP.style.textAlign = "center";
-    nameP.innerText = 'Nome';
-    document.getElementById("modal-upd").appendChild(nameP);
+    nameP.style.textAlign = "left";
+    nameP.innerText = 'Nome Attività';
+    document.getElementById("modal-body-upd").appendChild(nameP);
     nameTextArea = document.createElement("input");
     nameP.appendChild(nameTextArea);
 
-    lastNameP = document.createElement("p");
-    lastNameP.style.textAlign = "center";
-    lastNameP.innerText = 'Cognome';
-    document.getElementById("modal-upd").appendChild(lastNameP);
-    lastNameTextArea = document.createElement("input");
-    lastNameP.appendChild(lastNameTextArea);
+    DescrP = document.createElement("p");
+    DescrP.style.textAlign = "left";
+    DescrP.innerText = 'Descrizione Attività';
+    document.getElementById("modal-body-upd").appendChild(DescrP);
+    DescrTextArea = document.createElement("input");
+    DescrP.appendChild(DescrTextArea);
+
+    DataInizioP = document.createElement("p");
+    DataInizioP.style.textAlign = "left";
+    DataInizioP.innerText = 'Data Inizio';
+    document.getElementById("modal-body-upd").appendChild(DataInizioP);
+    DataInizioTextArea = document.createElement("input");
+    DataInizioTextArea.setAttribute("type", "date");
+    DataInizioP.appendChild(DataInizioTextArea);
+
+    DataFineP = document.createElement("p");
+    DataFineP.style.textAlign = "left";
+    DataFineP.innerText = 'Data Fine';
+    document.getElementById("modal-body-upd").appendChild(DataFineP);
+    DataFineTextArea = document.createElement("input");
+    DataFineTextArea.setAttribute("type", "date");
+    DataFineP.appendChild(DataFineTextArea);
+
+    PostiP = document.createElement("p");
+    PostiP.style.textAlign = "left";
+    PostiP.innerText = 'Posti';
+    document.getElementById("modal-body-upd").appendChild(PostiP);
+    PostiTextArea = document.createElement("input");
+    PostiTextArea.setAttribute("type", "number");
+    PostiP.appendChild(PostiTextArea);
+
+    PrezzoP = document.createElement("p");
+    PrezzoP.style.textAlign = "left";
+    PrezzoP.innerText = 'Prezzo';
+    document.getElementById("modal-body-upd").appendChild(PrezzoP);
+    PrezzoTextArea = document.createElement("input");
+    PrezzoTextArea.setAttribute("type", "number");
+    PrezzoP.appendChild(PrezzoTextArea);
 
     OKbutton = document.createElement("button");
     OKbutton.innerText = "OK";
@@ -516,8 +549,10 @@ function updateAttById(id) {
     OKbutton.onclick = function () {
         var body = {};
         body.idAttivita = id;
-        body.Nome = nameTextArea.value;
-        body.Cognome = lastNameTextArea.value;
+        body.NomeAttivita = nameTextArea.value;
+        body.DescrizioneAttivita = DescrTextArea.value;
+        body.DataInizio = DataInizioTextArea.value;
+        body.DataFine = DataFineTextArea.value;
         $.ajax({
             method: "POST",
             url: "/api/api/UpdateAtt",
@@ -551,14 +586,14 @@ function updateAttById(id) {
         hideModal();
     }
     $(".modal-footer").append(CancelButton);
-    document.getElementById("modal").style.display = "block";
+    document.getElementById("modal-upd").style.display = "block";
 };
 
 function hideModal() {
-    document.getElementById("modal-header").innerText = "";
-    $(".modal-body").empty();
+    document.getElementById("modal-header-upd").innerText = "";
+    $(".modal-body-upd").empty();
     $(".modal-footer").empty();
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("modal-upd").style.display = "none";
 }
 function refreshPage() {
 
