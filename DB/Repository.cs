@@ -73,12 +73,13 @@ namespace EsameFabio1.DB
 
         public void AddPrenotazione(string userId, Guid attivitaId)
         {
-           // Attivita entity = this.DBContext.Attivita.Where
-            Prenotazione prenotazione = new Prenotazione
+            var attivita = this.DBContext.Attivita.FirstOrDefault(a => a.IdAttivita == attivitaId);
+            PrenotazioneModel prenotazione = new PrenotazioneModel
             {
                 IdPrenotazioneAttivita = Guid.NewGuid(), // Genera un nuovo ID per la prenotazione
                 IdUtente = userId,
-                IdAttivita = attivitaId
+                IdAttivita = attivitaId,
+                CrossAttivita = attivita
 
 
             };
