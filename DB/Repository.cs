@@ -82,18 +82,26 @@ namespace EsameFabio1.DB
                 IdAttivita = attivitaId,
                 CrossAttivita = attivita
 
-
             };
 
             this.DBContext.Prenotazioni.Add(prenotazione);
             this.DBContext.SaveChanges();
 
         }
-        public List<Prenotazione> GetPrenotazione(string userId)
+        public List<PrenotazioneModel> GetPrenotazione(string userId)
         {
-            var prenotazioni = this.DBContext.Prenotazioni.Include(p => p.IdPrenotazioneAttivita);
+            var prenotazioni = this.DBContext.Prenotazioni.Where(p => p.IdUtente == userId).AsQueryable();
 
-            return prenotazioni.ToList();
+            List<PrenotazioneModel> prenotazioniList = prenotazioni
+                .Select(p => new PrenotazioneModel
+                {
+                    IdPrenotazioneAttivita = p.IdPrenotazioneAttivita,
+                    IdUtente = p.IdUtente,
+                    IdAttivita = p.IdAttivita,
+                    CrossAttivita = p.CrossAttivita
+                }).ToList();
+
+            return prenotazioniList;
         }
     }
 }

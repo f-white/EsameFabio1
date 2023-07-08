@@ -64,11 +64,11 @@ namespace EsameFabio1.Controllers
             return View(model);
         }
         [Authorize]
-        public IActionResult AttivitaPrenotate()
+        public IActionResult AttivitaPrenotate(string idUtente)
         {
-            List<PrenotazioneModel> attivitaPrenotate = repository.GetPrenotazione
-                (idUtente);
-            return View();
+           
+            List<PrenotazioneModel> attivitaPrenotate = repository.GetPrenotazione(idUtente);
+            return View(attivitaPrenotate);
         }
 
         [Authorize(Roles = "Admin")]
