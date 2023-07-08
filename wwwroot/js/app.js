@@ -166,7 +166,7 @@ function prenotaAttivita(userId, idAttivita) {
             // Gestisci la risposta qui se necessario
             console.log(response);
             alert("Prenotazione effettuata");
-            window.location.href = "/Home/Attivita";
+            window.location.href = "/Home/Attivita";  //modificato aggiungendo "prenotate"
         },
         error: function (error) {
             // Gestisci l'errore qui se necessario

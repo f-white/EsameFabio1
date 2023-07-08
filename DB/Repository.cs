@@ -1,5 +1,6 @@
 ﻿using EsameFabio1.DB;
 using EsameFabio1.DB.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ namespace EsameFabio1.DB
 
         public List<Attivita> GetAttivita()
         {
-            //select * from persons
+            //select * from attività
             List<Attivita> result = this.DBContext.Attivita.ToList();
             return result;
         }
@@ -87,6 +88,12 @@ namespace EsameFabio1.DB
             this.DBContext.Prenotazioni.Add(prenotazione);
             this.DBContext.SaveChanges();
 
+        }
+        public List<PrenotazioneModel> GetPrenotazione(string userId)
+        {
+            var prenotazioni = this.DBContext.Prenotazioni.Include(p => p.IdPrenotazioneAttivita);
+
+            return prenotazioni.ToList();
         }
     }
 }

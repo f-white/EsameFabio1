@@ -64,9 +64,9 @@ namespace EsameFabio1.Controllers
             return View(model);
         }
         [Authorize]
-        public IActionResult HiddenPage()
+        public IActionResult AttivitaPrenotate()
         {
-
+            //List<PrenotazioneModel> attivitaPrenotate = repository.GetAttivitaPrenotate(idUtente);
             return View();
         }
 
