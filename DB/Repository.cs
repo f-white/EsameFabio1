@@ -75,7 +75,7 @@ namespace EsameFabio1.DB
         public void AddPrenotazione(string userId, Guid attivitaId)
         {
             var attivita = this.DBContext.Attivita.FirstOrDefault(a => a.IdAttivita == attivitaId);
-            PrenotazioneModel prenotazione = new PrenotazioneModel
+            Prenotazione prenotazione = new Prenotazione
             {
                 IdPrenotazioneAttivita = Guid.NewGuid(), // Genera un nuovo ID per la prenotazione
                 IdUtente = userId,
@@ -89,11 +89,11 @@ namespace EsameFabio1.DB
             this.DBContext.SaveChanges();
 
         }
-        public List<PrenotazioneModel> GetPrenotazione(string userId)
-        {
-            var prenotazioni = this.DBContext.Prenotazioni.Include(p => p.IdPrenotazioneAttivita);
+        //public List<PrenotazioneModel> GetPrenotazione(string userId)
+        //{
+        //    var prenotazioni = this.DBContext.Prenotazioni.Include(p => p.IdPrenotazioneAttivita);
 
-            return prenotazioni.ToList();
-        }
+        //    return prenotazioni.ToList();
+        //}
     }
 }

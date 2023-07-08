@@ -19,6 +19,6 @@ namespace EsameFabio1.DB
 
             }
         public DbSet<Attivita> Attivita { get; set; }
-        public DbSet<PrenotazioneModel> Prenotazioni { get; set; }
+        public DbSet<Prenotazione> Prenotazioni { get; set; }
     }
 }
