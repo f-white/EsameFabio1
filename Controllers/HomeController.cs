@@ -66,7 +66,8 @@ namespace EsameFabio1.Controllers
         [Authorize]
         public IActionResult AttivitaPrenotate()
         {
-            //List<PrenotazioneModel> attivitaPrenotate = repository.GetAttivitaPrenotate(idUtente);
+            List<PrenotazioneModel> attivitaPrenotate = repository.GetPrenotazione
+                (idUtente);
             return View();
         }
 
