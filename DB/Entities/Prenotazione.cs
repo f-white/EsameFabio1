@@ -14,7 +14,7 @@ namespace EsameFabio1.DB.Entities
         [ForeignKey(nameof(IdAttivita))]
         public Attivita CrossAttivita { get; set; }
 
-    //[ForeignKey(nameof(IdUtente))]
-        //public User IdUserNavigation { get; set; }
+        [ForeignKey(nameof(IdUtente))]
+        public User CrossUtente { get; set; }
     }
 }

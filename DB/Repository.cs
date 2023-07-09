@@ -1,5 +1,6 @@
 ﻿using EsameFabio1.DB;
 using EsameFabio1.DB.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,15 @@ namespace EsameFabio1.DB
     public class Repository
     {
         private DBContext DBContext;
-        public Repository(DBContext DBContext)
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
+
+        public Repository(DBContext DBContext, SignInManager<User> signInManager,
+            UserManager<User> userManager)
         {
             this.DBContext = DBContext;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
         }
 
         public List<Attivita> GetAttivita()
@@ -88,20 +95,56 @@ namespace EsameFabio1.DB
             this.DBContext.SaveChanges();
 
         }
-        public List<PrenotazioneModel> GetPrenotazione(string userId)
-        {
-            var prenotazioni = this.DBContext.Prenotazioni.Where(p => p.IdUtente == userId).AsQueryable();
+        //public List<PrenotazioneModel> GetPrenotazione(User user)
+        //{
+        //    bool isAdmin = signInManager.UserManager.IsInRoleAsync(user, "Admin").Result;
+        //    var prenotazioni = this.DBContext.Prenotazioni.Where(p => p.IdUtente == user.Id).AsQueryable();
 
-            List<PrenotazioneModel> prenotazioniList = prenotazioni
+        //    List<PrenotazioneModel> prenotazioniList = prenotazioni
+        //        .Select(p => new PrenotazioneModel
+        //        {
+        //            IdPrenotazioneAttivita = p.IdPrenotazioneAttivita,
+        //            IdUtente = p.IdUtente,
+        //            IdAttivita = p.IdAttivita,
+        //            CrossAttivita = p.CrossAttivita
+        //        }).ToList();
+
+        //    return prenotazioniList;
+        //}
+        public List<PrenotazioneModel> GetPrenotazione(User user)
+        {
+            IQueryable<Prenotazione> prenotazioniQuery = this.DBContext.Prenotazioni;
+
+            // Verifica se l'utente ha il ruolo di amministratore
+            bool isAdmin = signInManager.UserManager.IsInRoleAsync(user, "Admin").Result;
+
+            if (!isAdmin)
+            {
+                // Se l'utente non è un amministratore, filtra le prenotazioni per l'ID utente
+                prenotazioniQuery = prenotazioniQuery.Where(p => p.IdUtente == user.Id);
+            }
+
+            List<PrenotazioneModel> prenotazioniList = prenotazioniQuery
                 .Select(p => new PrenotazioneModel
                 {
                     IdPrenotazioneAttivita = p.IdPrenotazioneAttivita,
                     IdUtente = p.IdUtente,
                     IdAttivita = p.IdAttivita,
-                    CrossAttivita = p.CrossAttivita
+                    CrossAttivita = p.CrossAttivita,
+                    CrossUtente = p.CrossUtente
                 }).ToList();
 
             return prenotazioniList;
         }
+        public void DeletePrenotazione(Guid idPrenotazioneAttivita)
+        {
+            Prenotazione toDelete = this.DBContext.Prenotazioni
+                    //.Where(p => p.ID != null && p.ID.Value.ToString() == ID) nel caso fosse nullable
+                    .Where(p => p.IdPrenotazioneAttivita == idPrenotazioneAttivita)
+                    .FirstOrDefault();
+            this.DBContext.Prenotazioni.Remove(toDelete);
+            this.DBContext.SaveChanges();
+        }
+
     }
 }

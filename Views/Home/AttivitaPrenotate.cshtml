@@ -1,6 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Elenco delle attività prenotate";
-
+﻿@if (User.IsInRole("Admin"))
+{
+    ViewData["Title"] = "Prenotazioni degli utenti";
+}
+else
+{
+    ViewData["Title"] = "Le mie prenotazioni";
 }
 @using Microsoft.AspNetCore.Identity;
 @using EsameFabio1.DB.Entities;
@@ -16,6 +20,10 @@
         <thead>
             <tr>
                 @*<th>Id Attivita</th>*@
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>Mail Utente</th>
+                }
                 <th>Nome Attivita</th>
                 <th>Descrizione Attivita</th>
                 <th>Data Inizio</th>
@@ -30,6 +38,10 @@
             {
                 <tr>
                     @*<td>@attivita.IdAttivita</td>*@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>@roba.CrossUtente.Email</th>
+                    }
                     <td>@roba.CrossAttivita.NomeAttivita</td>
                     <td>@roba.CrossAttivita.DescrizioneAttivita</td>
                     <td>@roba.CrossAttivita.DataInizio</td>

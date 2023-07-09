@@ -33,9 +33,32 @@ namespace EsameFabio1.Controllers
 
         public IActionResult Index()
         {
+			List<Attivita> attivita = this.repository.GetAttivita();
+			List<AttivitaModel> model = new List<AttivitaModel>();
+			foreach (Attivita a in attivita)
+			{
+				AttivitaModel result = new AttivitaModel()
+				{
+					IdAttivita = a.IdAttivita,
+					NomeAttivita = a.NomeAttivita,
+					DescrizioneAttivita = a.DescrizioneAttivita,
+					DataInizio = a.DataInizio,
+					DataFine = a.DataFine,
+					NumeroPosti = a.NumeroPosti,
+					PrezzoAttivita = a.PrezzoAttivita,
+					ImgAtt = a.ImgAtt
+
+				};
+
+				model.Add(result);
+			}
+			return View(model);
+		}
+        public IActionResult Privacy()
+        {
             return View();
         }
-        public IActionResult Privacy()
+        public IActionResult Contacts()
         {
             return View();
         }
@@ -64,10 +87,10 @@ namespace EsameFabio1.Controllers
             return View(model);
         }
         [Authorize]
-        public IActionResult AttivitaPrenotate(string idUtente)
+        public async Task<IActionResult> AttivitaPrenotate(string idUtente)
         {
-           
-            List<PrenotazioneModel> attivitaPrenotate = repository.GetPrenotazione(idUtente);
+           var currentUser = await signInManager.UserManager.GetUserAsync(User);
+            List<PrenotazioneModel> attivitaPrenotate = repository.GetPrenotazione(currentUser);
             return View(attivitaPrenotate);
         }
 

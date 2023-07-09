@@ -182,6 +182,13 @@ namespace TestFinaleFabio.Controllers
             return Ok();
         }
 
+        [HttpPost("DeleteAttivita")]
+        public async Task<IActionResult> DeleteAttivita([FromBody] Prenotazione prenotazione)
+        {
+            //string userId = userManager.GetUserId(User);
+            repository.DeletePrenotazione(prenotazione.IdPrenotazioneAttivita);
+            return Ok();
+        }
 
         // Prenota User
         /*  [Authorize]

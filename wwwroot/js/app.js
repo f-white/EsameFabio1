@@ -176,6 +176,32 @@ function prenotaAttivita(userId, idAttivita) {
         }
     });
 }
+function deleteAttivita(IdPrenotazioneAttivita) {
+    var body = {};
+    body.IdPrenotazioneAttivita = IdPrenotazioneAttivita;
+    $.ajax({
+        method: "POST",
+        url: "/api/Api/DeleteAttivita",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(body),
+        dataType: "json",
+        success: function (data, status) {
+            console.log(body);
+            console.log(data);
+            console.log(status);
+            this.always();
+        },
+        error: function (error, status) {
+            console.log(body);
+            console.log(error);
+            console.log(status);
+            this.always();
+        },
+        always: function () {
+            window.location = window.location;
+        }
+    });
+};
 //function PrenotaUser(idCrossAttrazionePeriodo, indice) {
    
 //    var body = {};
