@@ -82,7 +82,9 @@ namespace EsameFabio1.DB
         public void AddPrenotazione(string userId, Guid attivitaId)
         {
             var attivita = this.DBContext.Attivita.FirstOrDefault(a => a.IdAttivita == attivitaId);
-            Prenotazione prenotazione = new Prenotazione
+            attivita.NumeroPosti = attivita.NumeroPosti - 1;
+
+			Prenotazione prenotazione = new Prenotazione
             {
                 IdPrenotazioneAttivita = Guid.NewGuid(), // Genera un nuovo ID per la prenotazione
                 IdUtente = userId,
@@ -92,26 +94,39 @@ namespace EsameFabio1.DB
             };
 
             this.DBContext.Prenotazioni.Add(prenotazione);
+            this.DBContext.Attivita.Update(attivita);
             this.DBContext.SaveChanges();
 
         }
-        //public List<PrenotazioneModel> GetPrenotazione(User user)
-        //{
-        //    bool isAdmin = signInManager.UserManager.IsInRoleAsync(user, "Admin").Result;
-        //    var prenotazioni = this.DBContext.Prenotazioni.Where(p => p.IdUtente == user.Id).AsQueryable();
+		public void DeletePrenotazione(Guid idPrenotazioneAttivita)
+		{
+			
+			Prenotazione toDelete = this.DBContext.Prenotazioni
+					//.Where(p => p.ID != null && p.ID.Value.ToString() == ID) nel caso fosse nullable
+					.Where(p => p.IdPrenotazioneAttivita == idPrenotazioneAttivita)
+					.FirstOrDefault();
+			Attivita entity = this.DBContext.Attivita.Where(a => a.IdAttivita == (toDelete.IdAttivita)).FirstOrDefault();
+			entity.NumeroPosti = entity.NumeroPosti + 1;
+			this.DBContext.Prenotazioni.Remove(toDelete);
+			this.DBContext.SaveChanges();
+		}
+		//public List<PrenotazioneModel> GetPrenotazione(User user)
+		//{
+		//    bool isAdmin = signInManager.UserManager.IsInRoleAsync(user, "Admin").Result;
+		//    var prenotazioni = this.DBContext.Prenotazioni.Where(p => p.IdUtente == user.Id).AsQueryable();
 
-        //    List<PrenotazioneModel> prenotazioniList = prenotazioni
-        //        .Select(p => new PrenotazioneModel
-        //        {
-        //            IdPrenotazioneAttivita = p.IdPrenotazioneAttivita,
-        //            IdUtente = p.IdUtente,
-        //            IdAttivita = p.IdAttivita,
-        //            CrossAttivita = p.CrossAttivita
-        //        }).ToList();
+		//    List<PrenotazioneModel> prenotazioniList = prenotazioni
+		//        .Select(p => new PrenotazioneModel
+		//        {
+		//            IdPrenotazioneAttivita = p.IdPrenotazioneAttivita,
+		//            IdUtente = p.IdUtente,
+		//            IdAttivita = p.IdAttivita,
+		//            CrossAttivita = p.CrossAttivita
+		//        }).ToList();
 
-        //    return prenotazioniList;
-        //}
-        public List<PrenotazioneModel> GetPrenotazione(User user)
+		//    return prenotazioniList;
+		//}
+		public List<PrenotazioneModel> GetPrenotazione(User user)
         {
             IQueryable<Prenotazione> prenotazioniQuery = this.DBContext.Prenotazioni;
 
@@ -136,15 +151,7 @@ namespace EsameFabio1.DB
 
             return prenotazioniList;
         }
-        public void DeletePrenotazione(Guid idPrenotazioneAttivita)
-        {
-            Prenotazione toDelete = this.DBContext.Prenotazioni
-                    //.Where(p => p.ID != null && p.ID.Value.ToString() == ID) nel caso fosse nullable
-                    .Where(p => p.IdPrenotazioneAttivita == idPrenotazioneAttivita)
-                    .FirstOrDefault();
-            this.DBContext.Prenotazioni.Remove(toDelete);
-            this.DBContext.SaveChanges();
-        }
+      
 
     }
 }

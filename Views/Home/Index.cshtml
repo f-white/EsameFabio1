@@ -27,12 +27,12 @@
 
 					<div class="carousel-item @(Model[i] == Model.First() ? "active" : "")">
 						<div class="d-flex align-items-center justify-content-center h-100">
-						<img src="@(Model[i].ImgAtt)" alt="@(Model[i].DescrizioneAttivita)" class="d-block w-100 img-fluid">
+						<img src="@(Model[i].ImgAtt)" alt="@(Model[i].DescrizioneAttivita)" class="d-block w-100 img-fluid ristretta" style="height: 600px !important">
 						</div>
 						<div class="carousel-caption">
-							<a class="display-4">Le nostre esperienze</a>
+							<a class="h2">Le nostre esperienze</a>
 							<br>
-							<a class="display-4 small">Lasciati tentare...</a>
+							<a class="h3 small">Lasciati tentare...</a>
 						</div>
 					</div>
 
@@ -51,4 +51,3 @@
 
 	</div>
 </div>
-div>
